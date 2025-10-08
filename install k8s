@@ -1,0 +1,12 @@
+#!/bin/bash
+sudo snap install microk8s --classic --channel=1.33
+sudo usermod -a -G microk8s $USER
+mkdir -p ~/.kube
+chmod 0700 ~/.kube
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+cd $HOME
+mkdir .kube
+cd .kube
+microk8s config > config
+kubectl version --client
